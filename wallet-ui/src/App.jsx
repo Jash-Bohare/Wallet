@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Import from "./pages/Import";
 import Unlock from "./pages/Unlock";
 import Send from "./pages/Send";
+import AddToken from "./pages/AddToken";
+import SendToken from "./pages/SendToken";
 
 function App() {
   return (
@@ -14,8 +16,10 @@ function App() {
         <Route path="/create" element={<Create />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/import" element={<Import />} />
-        <Route path="/unlock" element={<Unlock />} />   
+        <Route path="/unlock" element={<Unlock />} />
         <Route path="/send" element={<Send />} />
+        <Route path="/add-token" element={<AddToken />} />
+        <Route path="/send-token/:address" element={<SendToken />} />
       </Routes>
     </BrowserRouter>
   );
