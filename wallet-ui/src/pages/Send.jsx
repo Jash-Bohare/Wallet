@@ -1,0 +1,121 @@
+import { useState } from "react";
+import { useWallet } from "../store/WalletContext";
+import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
+import {
+  getNonce,
+  getGasData,
+  estimateGas,
+  broadcastTx
+} from "../rpc/transaction";
+import { provider } from "../rpc/provider";
+
+export default function Send() {
+  const { privateKey } = useWallet();
+  const navigate = useNavigate();
+
+  const [to, setTo] = useState("");
+  const [amount, setAmount] = useState("");
+  const [gasInfo, setGasInfo] = useState(null);
+  const [status, setStatus] = useState("");
+
+  if (!privateKey) {
+    navigate("/unlock");
+    return null;
+  }
+
+  async function prepareTransaction() {
+    try {
+      setStatus("Preparing transaction...");
+
+      const wallet = new ethers.Wallet(privateKey, provider);
+
+      const nonce = await getNonce(wallet.address);
+      const gasData = await getGasData();
+
+      const tx = {
+        to,
+        value: ethers.parseEther(amount),
+        nonce,
+        maxFeePerGas: gasData.maxFeePerGas,
+        maxPriorityFeePerGas: gasData.maxPriorityFeePerGas,
+        chainId: (await provider.getNetwork()).chainId,
+        type: 2
+      };
+
+      const gasLimit = await estimateGas(tx);
+
+      setGasInfo({
+        ...tx,
+        gasLimit
+      });
+
+      setStatus("Gas estimated. Ready to send.");
+    } catch (err) {
+      console.error(err);
+      setStatus("Error preparing transaction");
+    }
+  }
+
+  async function sendTransaction() {
+    try {
+      setStatus("Signing transaction...");
+
+      const wallet = new ethers.Wallet(privateKey, provider);
+
+      const signedTx = await wallet.signTransaction(gasInfo);
+
+      setStatus("Broadcasting...");
+
+      const txResponse = await broadcastTx(signedTx);
+
+      setStatus("Transaction sent: " + txResponse.hash);
+
+      await txResponse.wait();
+
+      setStatus("Transaction confirmed!");
+    } catch (err) {
+      console.error(err);
+      setStatus("Transaction failed");
+    }
+  }
+
+  return (
+    <div>
+      <h2>Send ETH</h2>
+
+      <input
+        placeholder="Recipient Address"
+        value={to}
+        onChange={(e) => setTo(e.target.value)}
+      />
+
+      <input
+        placeholder="Amount in ETH"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+
+      <br /><br />
+
+      <button onClick={prepareTransaction}>
+        Estimate Gas
+      </button>
+
+      {gasInfo && (
+        <>
+          <p>Gas Limit: {gasInfo.gasLimit.toString()}</p>
+          <p>
+            Max Fee: {ethers.formatUnits(gasInfo.maxFeePerGas, "gwei")} gwei
+          </p>
+
+          <button onClick={sendTransaction}>
+            Confirm & Send
+          </button>
+        </>
+      )}
+
+      <p>{status}</p>
+    </div>
+  );
+}

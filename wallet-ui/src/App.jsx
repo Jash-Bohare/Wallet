@@ -4,6 +4,7 @@ import Create from "./pages/Create";
 import Dashboard from "./pages/Dashboard";
 import Import from "./pages/Import";
 import Unlock from "./pages/Unlock";
+import Send from "./pages/Send";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/import" element={<Import />} />
         <Route path="/unlock" element={<Unlock />} />   
+        <Route path="/send" element={<Send />} />
       </Routes>
     </BrowserRouter>
   );
