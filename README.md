@@ -29,6 +29,12 @@ Astra Vault is a premium, high-fidelity Ethereum wallet designed for developers 
 - **Factory Reset**: A built-in "Danger Zone" utility to securely wipe all local data with a single click.
 
 ---
+## 👀 Glimpse of the Project
+<img width="1589" height="726" alt="Screenshot 2026-03-05 141747" src="https://github.com/user-attachments/assets/848d2420-407b-4753-8fcf-61c5f3e3f276" />
+<img width="1589" height="730" alt="Screenshot 2026-03-05 142308" src="https://github.com/user-attachments/assets/c5738e97-a304-4b4d-bd62-f7c1124aa0ff" />
+<img width="1592" height="732" alt="image" src="https://github.com/user-attachments/assets/5d793a08-a723-4730-a630-81cba46d5978" />
+
+---
 
 ## 🛠️ Tech Stack
 
