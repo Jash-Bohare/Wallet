@@ -186,8 +186,9 @@ export default function SignMessagePage() {
             <h2 className="text-xs font-black text-foreground tracking-tight uppercase tracking-[0.15em]">Verify Message</h2>
           </div>
 
-          <div className="space-y-5 relative z-10 flex-1 flex flex-col">
-            <div className="space-y-4">
+          <div className="space-y-5 relative z-10 flex-1 flex flex-col min-h-0">
+            {/* Scrollable Input Area */}
+            <div className="flex-1 overflow-y-auto px-4 -mx-4 space-y-4 custom-scrollbar">
               <div className="space-y-2">
                 <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-1 opacity-60">Message Content</Label>
                 <Textarea
@@ -214,7 +215,7 @@ export default function SignMessagePage() {
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 pb-2">
                 <div className="flex justify-between items-center ml-1">
                   <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">Expected Signer (Optional)</Label>
                   {!vExpectedAddress && activeAddress && (
@@ -243,14 +244,14 @@ export default function SignMessagePage() {
               disabled={!vMessage || !vSignature || isVerifying}
               variant="secondary"
               className={cn(
-                "w-full h-12 bg-white/10 hover:bg-white/20 font-black rounded-xl transition-all shadow-lg border border-white/5 uppercase text-[9px] tracking-widest mt-auto",
+                "w-full h-12 bg-white/10 hover:bg-white/20 font-black rounded-xl transition-all shadow-lg border border-white/5 uppercase text-[9px] tracking-widest mt-2 shrink-0",
                 verificationStatus === "success" && "border-amber-500/30 bg-amber-500/5"
               )}
             >
               {isVerifying ? <Loader2 className="w-5 h-5 animate-spin" /> : "Verify Signature"}
             </Button>
 
-            <div className="h-[76px] relative">
+            <div className="relative shrink-0 min-h-0">
               {verificationStatus === "success" && recoveredAddress && (
                 <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className={cn(
