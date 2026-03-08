@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 
 export function getProvider(rpcUrl: string, network: any = null): ethers.JsonRpcProvider {
-    // 🛡️ Using staticNetwork prevents ethers from spamming network detection calls
+    // Using staticNetwork prevents ethers from spamming network detection calls
     // especially useful when a developer node (like Hardhat) is offline.
     return new ethers.JsonRpcProvider(rpcUrl, network ? {
         chainId: network.chainId,

@@ -10,7 +10,7 @@ const ERC20_ABI = [
     "function transfer(address,uint256) returns (bool)"
 ];
 
-// 1️⃣ Fetch Token Metadata
+// Fetch Token Metadata
 export async function getTokenMetadata(
     tokenAddress: string,
     customProvider: ethers.Provider = provider
@@ -30,7 +30,7 @@ export async function getTokenMetadata(
     };
 }
 
-// 2️⃣ Fetch Token Balance
+// Fetch Token Balance
 export async function getTokenBalance(
     tokenAddress: string,
     userAddress: string,
@@ -40,7 +40,7 @@ export async function getTokenBalance(
     return await contract.balanceOf(userAddress);
 }
 
-// 3️⃣ Prepare Token Transfer (returns populated tx)
+// Prepare Token Transfer (returns populated tx)
 export async function prepareTokenTransfer(
     tokenAddress: string,
     to: string,
